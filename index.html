@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A free 90-day plan to become an AI engineer: courses, free tools, 3 deployed projects, and a public proof-of-progress system.">
+<style>:root{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Zero-Dollar AI Engineer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:wght@400;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a lab notebook — one reading column, a sticky section rail on wide screens, ruled "experiment" cards only for weeks and projects */
+:root{
+  --bg:#f6f8f7; --surface:#ffffff; --ink:#15211f; --muted:#5a6b68; --line:#d8e1df;
+  --accent:#0d6b66; --accent-soft:#e1f0ee; --mark:#b8670b; --mark-soft:#fbf0e1; --warn:#a33a2c; --warn-soft:#f8e7e4;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Public Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1514; --surface:#162020; --ink:#e3ecea; --muted:#94a6a3; --line:#2a3735;
+  --accent:#4fc2b8; --accent-soft:#16312f; --mark:#e7a24c; --mark-soft:#33260f; --warn:#f08a7a; --warn-soft:#3a1d19; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1514; --surface:#162020; --ink:#e3ecea; --muted:#94a6a3; --line:#2a3735;
+  --accent:#4fc2b8; --accent-soft:#16312f; --mark:#e7a24c; --mark-soft:#33260f; --warn:#f08a7a; --warn-soft:#3a1d19; color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font:16px/1.6 var(--body)}
+.wrap{max-width:1180px;margin:0 auto;padding-block:40px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;grid-template-columns:210px minmax(0,1fr);gap:48px}
+@media (max-width:900px){.wrap{grid-template-columns:minmax(0,1fr);gap:24px}nav.rail{position:static!important;max-height:none!important}}
+nav.rail{position:sticky;top:calc(env(safe-area-inset-top,0px) + 24px);align-self:start;max-height:calc(100vh - 48px);overflow:auto;font-size:14px}
+nav.rail ol{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+nav.rail a{display:block;padding:5px 10px;border-radius:6px;color:var(--muted);text-decoration:none}
+nav.rail a:hover,nav.rail a:focus-visible{background:var(--accent-soft);color:var(--ink);outline:none}
+.progress{margin-top:18px;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.progress .bar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin-top:6px}
+.progress .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
+main{min-width:0}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(34px,5vw,54px);font-weight:700;letter-spacing:-.02em}
+h2{font-size:28px;font-weight:700;margin-bottom:12px}
+h3{font-size:19px;font-weight:700}
+section{padding-top:52px}
+p,li{max-width:70ch}
+a{color:var(--accent);text-underline-offset:2px}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.eyebrow{font:600 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--mark)}
+.lede{font-size:19px;color:var(--muted);margin-top:14px}
+.facts{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:22px;font-family:var(--mono);font-size:14px}
+.facts b{font-size:22px;font-family:var(--display);display:block;color:var(--ink)}
+.facts span{color:var(--muted)}
+.note{border-left:3px solid var(--mark);background:var(--mark-soft);padding:12px 16px;border-radius:0 8px 8px 0;margin:16px 0;max-width:78ch}
+.note.warn{border-color:var(--warn);background:var(--warn-soft)}
+.note p{margin:0}
+.tblwrap{overflow-x:auto;margin-top:14px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:15px}
+th,td{text-align:left;vertical-align:top;padding:10px 14px;border-bottom:1px solid var(--line)}
+th{font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+.tag{display:inline-block;font:600 11px var(--mono);padding:2px 7px;border-radius:999px;background:var(--accent-soft);color:var(--accent);margin-left:6px;vertical-align:2px;white-space:nowrap}
+.tag.add{background:var(--mark-soft);color:var(--mark)}
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:14px}
+.skill{padding:14px 16px;border-top:3px solid var(--accent);background:var(--surface);border-radius:0 0 8px 8px}
+.skill h3{font-size:16px;margin-bottom:4px}
+.skill p{margin:0;font-size:14px;color:var(--muted)}
+.phase{margin-top:30px}
+.phase-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;border-bottom:2px solid var(--ink);padding-bottom:6px}
+.phase-head .days{font:600 13px var(--mono);color:var(--muted)}
+.week{display:grid;grid-template-columns:78px minmax(0,1fr);gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+@media (max-width:560px){.week{grid-template-columns:minmax(0,1fr);gap:6px}}
+.wk{font:600 13px var(--mono);color:var(--accent)}
+.wk small{display:block;color:var(--muted);font-weight:400}
+.week h3{margin-bottom:8px}
+.rows{display:grid;gap:6px}
+.row{display:grid;grid-template-columns:70px minmax(0,1fr);gap:10px;font-size:15px}
+.row .k{font:600 11px/2 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.row ul{margin:0;padding-left:18px}
+label.done{display:inline-flex;align-items:center;gap:8px;margin-top:10px;font-size:14px;color:var(--muted);cursor:pointer}
+label.done input{width:18px;height:18px;accent-color:var(--accent)}
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:16px}
+.proj{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.proj .num{font:600 12px var(--mono);color:var(--mark)}
+.proj ul{margin:0;padding-left:18px;font-size:14.5px}
+.proj p{margin:0;font-size:15px}
+.chain{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:18px 0;font:600 13px var(--mono)}
+.chain span{padding:8px 12px;border:1px solid var(--accent);border-radius:6px;background:var(--accent-soft)}
+.chain i{font-style:normal;color:var(--muted)}
+pre{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;overflow-x:auto;font:13.5px/1.55 var(--mono);margin:10px 0 0;white-space:pre}
+.copy{position:absolute;top:8px;right:8px;font:600 12px var(--mono);border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:6px;padding:4px 10px;cursor:pointer}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.two>div{min-width:0}
+ul.tight{padding-left:18px;margin:8px 0}
+ul.tight li{margin:4px 0}
+.small{font-size:14px;color:var(--muted)}
+footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<nav class="rail" aria-label="Sections">
+  <ol>
+    <li><a href="#reel">The reel</a></li>
+    <li><a href="#skills">5 skills</a></li>
+    <li><a href="#setup">Day 0 setup</a></li>
+    <li><a href="#learn">Learn stack</a></li>
+    <li><a href="#build">Build stack</a></li>
+    <li><a href="#deploy">Deploy stack</a></li>
+    <li><a href="#roadmap">90-day roadmap</a></li>
+    <li><a href="#projects">3 projects</a></li>
+    <li><a href="#proof">Proof system</a></li>
+    <li><a href="#templates">Templates</a></li>
+    <li><a href="#caveats">Gaps &amp; fixes</a></li>
+  </ol>
+  <div class="progress" aria-live="polite">
+    <div class="small"><span id="pcount">0</span> of <span id="ptotal">13</span> weeks done</div>
+    <div class="bar"><i id="pbar"></i></div>
+    <div class="small" style="margin-top:6px">Ticks are saved in this browser only. Your public proof lives on GitHub.</div>
+  </div>
+</nav>
+
+<main>
+<header>
+  <div class="eyebrow">90-day plan · $0 budget · built from a Hyperautomation Labs reel</div>
+  <h1>Zero-Dollar AI Engineer</h1>
+  <p class="lede">Learn, build and deploy three AI apps in 90 days using only free courses, free API tiers and free hosting, with a public paper trail that anyone can check.</p>
+  <div class="facts">
+    <div><b>90 days</b><span>~2–3 h/day, 6 days/week</span></div>
+    <div><b>3 apps</b><span>live URLs, public code</span></div>
+    <div><b>$0</b><span>no card needed for the core path</span></div>
+    <div><b>1 log</b><span>daily commits as proof</span></div>
+  </div>
+</header>
+
+<section id="reel">
+  <div class="eyebrow">Source</div>
+  <h2>What the reel says</h2>
+  <p>The reel (<a href="https://www.facebook.com/hyperautomationlabs/videos/856002223763331/">Hyperautomation Labs, "How to become an AI engineer in 2026: the $0 free-only path"</a>) argues that a $9,000 bootcamp curriculum is almost entirely available for free from the companies and researchers who build the models. Its description lists:</p>
+  <ul class="tight">
+    <li>An AI engineer in 2026 builds <em>on top of</em> existing models. No PhD needed.</li>
+    <li>5 skills companies hire for, and what isn't required.</li>
+    <li><b>Free learn stack:</b> Karpathy's Zero to Hero, Hugging Face, Microsoft, Google/Kaggle, DeepLearning.AI, the cookbooks.</li>
+    <li><b>Free build stack:</b> Groq, Gemini Flash, Chroma, LangChain, Colab, Hugging Face Spaces.</li>
+    <li>A 90-day roadmap ending in 3 deployed projects.</li>
+    <li>Limits of the free path, and a free fix for each.</li>
+    <li>Salary reality: ~$154K median (their figure, citing Levels.fyi).</li>
+  </ul>
+  <div class="note"><p>Facebook only shows the video to signed-in users, so this plan is built from the reel's full description, not its audio. The creator's own guide is sent to people who comment "ZERO". Everything below follows the reel's structure, fills in the details with real links, and adds newer free tools where they're a better fit. Items marked <span class="tag add">added</span> weren't in the reel.</p></div>
+</section>
+
+<section id="skills">
+  <div class="eyebrow">Target</div>
+  <h2>The 5 skills to aim for</h2>
+  <p>The reel doesn't list them in its description, so these are the five that current AI-engineer job posts ask for most. The roadmap trains each one.</p>
+  <div class="skills">
+    <div class="skill"><h3>1 · Python &amp; APIs</h3><p>Clean Python, HTTP/JSON, async, env vars, Git. The base for everything else.</p></div>
+    <div class="skill"><h3>2 · Prompt &amp; context engineering</h3><p>System prompts, structured output, few-shot, tool schemas, context budgets.</p></div>
+    <div class="skill"><h3>3 · RAG &amp; retrieval</h3><p>Embeddings, chunking, vector stores, hybrid search, citations.</p></div>
+    <div class="skill"><h3>4 · Agents &amp; tool use</h3><p>Tool calling, LangGraph-style workflows, MCP servers, memory.</p></div>
+    <div class="skill"><h3>5 · Evals &amp; shipping</h3><p>Test sets, LLM-as-judge, tracing, cost/latency, deployment.</p></div>
+  </div>
+  <p class="small" style="margin-top:12px"><b>Not required:</b> a PhD, training foundation models from scratch, heavy calculus, paid GPUs. You'll touch the math through Karpathy's lectures so models aren't a black box, but you won't need to derive anything.</p>
+</section>
+
+<section id="setup">
+  <div class="eyebrow">Day 0 · about 2 hours</div>
+  <h2>Accounts and setup</h2>
+  <p>Create these free accounts before Day 1. None of the core ones ask for a card.</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Account</th><th>Why</th><th>Link</th></tr></thead>
+    <tbody>
+      <tr><td>GitHub</td><td>Code, daily learning log, Pages portfolio, Actions CI, Codespaces</td><td><a href="https://github.com/signup">github.com/signup</a></td></tr>
+      <tr><td>Google AI Studio</td><td>Free Gemini API key (Flash models)</td><td><a href="https://aistudio.google.com/apikey">aistudio.google.com</a></td></tr>
+      <tr><td>Groq</td><td>Free, very fast open-model inference</td><td><a href="https://console.groq.com">console.groq.com</a></td></tr>
+      <tr><td>OpenRouter <span class="tag add">added</span></td><td>One key for ~30 free models; good backup when one provider rate-limits you</td><td><a href="https://openrouter.ai/models?max_price=0">openrouter.ai (free models)</a></td></tr>
+      <tr><td>Hugging Face</td><td>Courses, models, datasets, Spaces, certificates</td><td><a href="https://huggingface.co/join">huggingface.co/join</a></td></tr>
+      <tr><td>Kaggle</td><td>Courses, badges, free notebook GPUs (~30 h/week)</td><td><a href="https://www.kaggle.com">kaggle.com</a></td></tr>
+      <tr><td>DeepLearning.AI</td><td>Free short courses</td><td><a href="https://www.deeplearning.ai/short-courses/">deeplearning.ai/short-courses</a></td></tr>
+      <tr><td>Microsoft Learn <span class="tag add">added</span></td><td>Shareable public transcript of completed modules</td><td><a href="https://learn.microsoft.com/en-us/training/">learn.microsoft.com/training</a></td></tr>
+      <tr><td>WakaTime <span class="tag add">added</span></td><td>Public, automatic record of your coding hours</td><td><a href="https://wakatime.com">wakatime.com</a></td></tr>
+      <tr><td>Hashnode or DEV</td><td>Free blog for weekly write-ups</td><td><a href="https://hashnode.com">hashnode.com</a> · <a href="https://dev.to">dev.to</a></td></tr>
+    </tbody>
+  </table></div>
+  <p class="small">Install: <a href="https://www.python.org/downloads/">Python 3.12+</a>, <a href="https://docs.astral.sh/uv/">uv</a> (fast package manager), <a href="https://code.visualstudio.com">VS Code</a>, <a href="https://git-scm.com/downloads">Git</a>, <a href="https://ollama.com/download">Ollama</a> (local models, no limits). No local machine? Use <a href="https://github.com/features/codespaces">GitHub Codespaces</a> (free monthly hours) or <a href="https://colab.research.google.com">Google Colab</a>.</p>
+</section>
+
+<section id="learn">
+  <div class="eyebrow">Learn</div>
+  <h2>The free learning stack</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Resource</th><th>Use it for</th><th>Link</th></tr></thead>
+    <tbody>
+      <tr><td>Karpathy: Zero to Hero</td><td>How neural nets and GPTs work, built from scratch (micrograd → makemore → GPT)</td><td><a href="https://karpathy.ai/zero-to-hero.html">karpathy.ai/zero-to-hero</a></td></tr>
+      <tr><td>Karpathy: Intro to LLMs</td><td>1-hour mental model of LLMs; watch in Week 3</td><td><a href="https://www.youtube.com/watch?v=zjkBMFhNj_g">YouTube</a></td></tr>
+      <tr><td>Hugging Face LLM Course</td><td>Transformers, tokenizers, fine-tuning, datasets</td><td><a href="https://huggingface.co/learn/llm-course">huggingface.co/learn/llm-course</a></td></tr>
+      <tr><td>Hugging Face Agents Course</td><td>Agents end to end; has a free certificate</td><td><a href="https://huggingface.co/learn/agents-course">huggingface.co/learn/agents-course</a></td></tr>
+      <tr><td>Hugging Face MCP Course <span class="tag add">added</span></td><td>Model Context Protocol, now a standard way to give models tools</td><td><a href="https://huggingface.co/learn/mcp-course">huggingface.co/learn/mcp-course</a></td></tr>
+      <tr><td>Microsoft: Generative AI for Beginners</td><td>21 lessons: prompting, RAG, vector DBs, function calling, app building</td><td><a href="https://github.com/microsoft/generative-ai-for-beginners">github.com/microsoft/generative-ai-for-beginners</a></td></tr>
+      <tr><td>Microsoft: AI Agents for Beginners</td><td>Agent design patterns, tool use, multi-agent, planning</td><td><a href="https://github.com/microsoft/ai-agents-for-beginners">github.com/microsoft/ai-agents-for-beginners</a></td></tr>
+      <tr><td>Microsoft: MCP for Beginners <span class="tag add">added</span></td><td>Build MCP servers and clients</td><td><a href="https://github.com/microsoft/mcp-for-beginners">github.com/microsoft/mcp-for-beginners</a></td></tr>
+      <tr><td>Kaggle Learn</td><td>Python, Pandas, Intro to ML micro-courses with badges</td><td><a href="https://www.kaggle.com/learn">kaggle.com/learn</a></td></tr>
+      <tr><td>Google × Kaggle 5-Day Intensives</td><td>Self-paced guides from Google engineers (Gen AI; AI Agents)</td><td><a href="https://www.kaggle.com/learn-guide/5-day-genai">5-Day Gen AI guide</a> · <a href="https://blog.google/innovation-and-ai/technology/developers-tools/kaggle-genai-intensive-course-vibe-coding-june-2026">2026 Agents edition</a></td></tr>
+      <tr><td>Google ML Crash Course</td><td>Optional ML fundamentals refresher</td><td><a href="https://developers.google.com/machine-learning/crash-course">developers.google.com/ml-crash-course</a></td></tr>
+      <tr><td>DeepLearning.AI short courses</td><td>1–2 hour focused courses: prompting, LangChain RAG, agents, evals</td><td><a href="https://www.deeplearning.ai/short-courses/">deeplearning.ai/short-courses</a></td></tr>
+      <tr><td>LangChain Academy <span class="tag add">added</span></td><td>Free official LangGraph course</td><td><a href="https://academy.langchain.com">academy.langchain.com</a></td></tr>
+      <tr><td>Cookbooks</td><td>Copy-ready recipes from the model makers</td><td><a href="https://github.com/google-gemini/cookbook">Gemini</a> · <a href="https://github.com/anthropics/anthropic-cookbook">Anthropic</a> · <a href="https://cookbook.openai.com">OpenAI</a></td></tr>
+      <tr><td>Anthropic courses <span class="tag add">added</span></td><td>Interactive prompt-engineering and tool-use tutorials</td><td><a href="https://github.com/anthropics/courses">github.com/anthropics/courses</a></td></tr>
+      <tr><td>CS50's Python (Harvard) <span class="tag add">added</span></td><td>Best free Python course; free verifiable certificate</td><td><a href="https://cs50.harvard.edu/python/">cs50.harvard.edu/python</a></td></tr>
+      <tr><td>MIT Missing Semester <span class="tag add">added</span></td><td>Shell, Git, editors: the tooling nobody teaches</td><td><a href="https://missing.csail.mit.edu">missing.csail.mit.edu</a></td></tr>
+      <tr><td>Full Stack LLM Bootcamp <span class="tag add">added</span></td><td>Free recorded bootcamp: LLMOps, UX, deployment</td><td><a href="https://fullstackdeeplearning.com/llm-bootcamp/">fullstackdeeplearning.com/llm-bootcamp</a></td></tr>
+      <tr><td>Prompting Guide <span class="tag add">added</span></td><td>Reference for prompting techniques</td><td><a href="https://www.promptingguide.ai">promptingguide.ai</a></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="build">
+  <div class="eyebrow">Build</div>
+  <h2>The free build stack</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Layer</th><th>From the reel</th><th>Better or backup free option</th></tr></thead>
+    <tbody>
+      <tr><td>LLM inference</td><td><a href="https://console.groq.com/docs/models">Groq</a> (fast open models) and <a href="https://ai.google.dev/gemini-api/docs">Gemini Flash</a> via AI Studio</td><td><a href="https://openrouter.ai/models?max_price=0">OpenRouter free models</a>, <a href="https://cloud.cerebras.ai">Cerebras</a> (very fast, short context), <a href="https://ollama.com">Ollama</a> (local, unlimited, private)</td></tr>
+      <tr><td>Embeddings</td><td>(not named)</td><td><a href="https://ai.google.dev/gemini-api/docs/embeddings">Gemini embeddings</a> or local <a href="https://sbert.net">sentence-transformers</a></td></tr>
+      <tr><td>Vector store</td><td><a href="https://docs.trychroma.com">Chroma</a></td><td><a href="https://supabase.com/docs/guides/ai">Supabase pgvector</a> (hosted free tier, adds auth + DB) for Project 3</td></tr>
+      <tr><td>Framework</td><td><a href="https://docs.langchain.com">LangChain</a></td><td><a href="https://langchain-ai.github.io/langgraph/">LangGraph</a> for agents; <a href="https://ai.pydantic.dev">Pydantic AI</a> as a lighter alternative</td></tr>
+      <tr><td>Notebooks / GPU</td><td><a href="https://colab.research.google.com">Google Colab</a></td><td><a href="https://www.kaggle.com/code">Kaggle Notebooks</a> (larger weekly GPU quota); <a href="https://github.com/unslothai/unsloth">Unsloth</a> for free-GPU fine-tuning</td></tr>
+      <tr><td>UI</td><td>(Spaces implies Gradio)</td><td><a href="https://www.gradio.app">Gradio</a> or <a href="https://streamlit.io">Streamlit</a>; <a href="https://fastapi.tiangolo.com">FastAPI</a> for a real backend</td></tr>
+      <tr><td>AI coding help <span class="tag add">added</span></td><td>—</td><td><a href="https://github.com/features/copilot">GitHub Copilot Free</a>, <a href="https://codeassist.google">Gemini Code Assist</a> (free for individuals). Use them to explain, not to skip learning.</td></tr>
+      <tr><td>Tools for agents <span class="tag add">added</span></td><td>—</td><td><a href="https://modelcontextprotocol.io">MCP</a>; <a href="https://tavily.com">Tavily</a> search API (free monthly credits)</td></tr>
+      <tr><td>Evals <span class="tag add">added</span></td><td>—</td><td><a href="https://www.promptfoo.dev">promptfoo</a> (open source, runs in CI)</td></tr>
+      <tr><td>Tracing <span class="tag add">added</span></td><td>—</td><td><a href="https://langfuse.com">Langfuse</a> (open source; free cloud hobby tier)</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note"><p><b>Free-tier privacy:</b> Google may use Gemini free-tier requests to improve its products. Never send private or client data through a free tier. Use Ollama locally for anything sensitive.</p></div>
+</section>
+
+<section id="deploy">
+  <div class="eyebrow">Deploy</div>
+  <h2>Free hosting</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Host</th><th>Best for</th><th>Watch out for</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://huggingface.co/spaces">Hugging Face Spaces</a></td><td>Gradio demos next to your HF profile (reel's pick)</td><td>Reports from mid-2026 say new compute Spaces now need a paid plan; Static Spaces stay free. Check <a href="https://huggingface.co/pricing">huggingface.co/pricing</a> when you create one.</td></tr>
+      <tr><td><a href="https://share.streamlit.io">Streamlit Community Cloud</a> <span class="tag add">added</span></td><td>Project 1: deploy straight from a GitHub repo</td><td>Apps sleep after ~12 h without visitors; ~1–2.7 GB RAM</td></tr>
+      <tr><td><a href="https://render.com/pricing">Render</a> <span class="tag add">added</span></td><td>FastAPI backends, Gradio apps in Docker</td><td>Free services sleep when idle; first request is slow</td></tr>
+      <tr><td><a href="https://vercel.com/pricing">Vercel Hobby</a> <span class="tag add">added</span></td><td>Next.js or static front ends for Project 3</td><td>Non-commercial use only on Hobby</td></tr>
+      <tr><td><a href="https://pages.cloudflare.com">Cloudflare Pages / Workers</a> <span class="tag add">added</span></td><td>Static sites and light APIs with generous free limits</td><td>Workers aren't a Python ML runtime; keep heavy work on the LLM API</td></tr>
+      <tr><td><a href="https://pages.github.com">GitHub Pages</a> <span class="tag add">added</span></td><td>Portfolio site and progress dashboard</td><td>Static only</td></tr>
+      <tr><td><a href="https://docs.github.com/en/actions">GitHub Actions</a> <span class="tag add">added</span></td><td>Run evals on every push; free for public repos</td><td>Store API keys as repository secrets</td></tr>
+    </tbody>
+  </table></div>
+  <p class="small">Skip Google Cloud Run, AWS and Azure free tiers for this plan: they ask for a card, and a misconfigured app can bill you.</p>
+</section>
+
+<section id="roadmap">
+  <div class="eyebrow">Roadmap</div>
+  <h2>90 days, week by week</h2>
+  <p>Each week has three parts: <b>Learn</b> (courses), <b>Build</b> (code you push), <b>Proof</b> (what you publish). Tick a week when all three are done.</p>
+
+  <div class="phase">
+    <div class="phase-head"><h3>Phase 1 · Foundations</h3><span class="days">Days 1–21</span></div>
+
+    <div class="week"><div class="wk">Week 1<small>Days 1–7</small></div><div>
+      <h3>Python, Git and your first API call</h3>
+      <div class="rows">
+        <div class="row"><span class="k">Learn</span><div><a href="https://cs50.harvard.edu/python/">CS50P</a> lectures 0–4 · <a href="https://missing.csail.mit.edu/2020/version-control/">Missing Semester: Git</a> · <a href="https://learngitbranching.js.org">Learn Git Branching</a></div></div>
+        <div class="row"><span class="k">Build</span><div>Create the <code>ai-engineer-90-days</code> repo. Write <code>hello_llm.py</code> that calls Gemini and Groq with the same prompt and prints both answers and latency.</div></div>
+        <div class="row"><span class="k">Proof</span><div>Day 1 announcement post (template below). Daily LOG.md commits start today.</div></div>
+      </div>
+      <label class="done"><input type="checkbox" id="w1" data-week> Week 1 done</label>
+    </div></div>
+
+    <div class="week"><div class="wk">Week 2<small>Days 8–14</small></div><div>
+      <h3>Python for real projects</h3>
+      <div class="rows">
+        <div class="row"><span class="k">Learn</span><div>CS50P lectures 5–8 (tests, files, regex, OOP) · <a href="https://www.kaggle.com/learn/pandas">Kaggle Pandas</a> · <a href="https://fastapi.tiangolo.com/tutorial/">FastAPI tutorial</a> first sections</div></div>
+        <div class="row"><span class="k">Build</span><div>CLI chatbot with conversation memory, streaming output, and a <code>.env</code> file for keys. Add one pytest test.</div></div>
+        <div class="row"><span class="k">Proof</span><div>Submit CS50P final project at the end of Phase 1 for the free certificate. Earn the Kaggle Pandas badge.</div></div>
+      </div>
+      <label class="done"><input type="checkbox" id="w2" data-week> Week 2 done</label>
+    </div></div>
+
+    <div class="week"><div class="wk">Week 3<small>Days 15–21</small></div><div>
+      <h3>How LLMs work, and prompting</h3>
+      <div class="rows">
+        <div class="row"><span class="k">Learn</span><div><a href="https://www.youtube.com/watch?v=zjkBMFhNj_g">Intro to LLMs</a> · Zero to Hero: micrograd + makemore part 1 · <a href="https://www.deeplearning.ai/short-courses/chatgpt-prompt-engineering-for-developers/">Prompt Engineering for Developers</a> · <a href="https://github.com/anthropics/courses">Anthropic prompt tutorial</a></div></div>
+        <div class="row"><span class="k">Build</span><div>Structured-output extractor: paste messy text (an invoice, a job ad), get validated JSON via a Pydantic model. Compare 3 models.</div></div>
+        <div class="row"><span class="k">Proof</span><div>First weekly blog post: "What I learned building micrograd". Push your micrograd notebook.</div></div>
+      </div>
+      <label class="done"><input type="checkbox" id="w3" data-week> Week 3 done</label>
+    </div></div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head"><h3>Phase 2 · RAG apps → Project 1</h3><span class="days">Days 22–42</span></div>
+
+    <div class="week"><div class="wk">Week 4<small>Days 22–28</small></div><div>
+      <h3>Embeddings and vector search</h3>
+      <div class="rows">
+        <div class="row"><span class="k">Learn</span><div><a href="https://github.com/microsoft/generative-ai-for-beginners">MS Gen AI</a> lessons on search apps and RAG/vector DBs · <a href="https://huggingface.co/learn/llm-course">HF LLM Course</a> chapters 1–2 and the semantic search section · <a href="https://docs.trychroma.com">Chroma docs</a></div></div>
+        <div class="row"><span class="k">Build</span><div>Chunk and embed a document set you care about into Chroma. Write a search script that returns the top 5 chunks with scores.</div></div>
+        <div class="row"><span class="k">Proof</span><div>Post a screenshot of search results plus one thing that surprised you about chunk size.</div></div>
+      </div>
+      <label class="done"><input type="checkbox" id="w4" data-week> Week 4 done</label>
+    </div></div>
+
+    <div class="week"><div class="wk">Week 5<small>Days 29–35</small></div><div>
+      <h3>RAG with LangChain</h3>
+      <div class="rows">
+        <div class="row"><span class="k">Learn</span><div><a href="https://www.deeplearning.ai/short-courses/langchain-chat-with-your-data/">LangChain: Chat with Your Data</a> · LangChain RAG tutorial in the <a href="https://docs.langchain.com">docs</a> · <a href="https://github.com/google-gemini/cookbook">Gemini cookbook</a> RAG examples</div></div>
+        <div class="row"><span class="k">Build</span><div>Project 1 MVP: Streamlit chat UI, answers with cited sources, Groq/Gemini switch.</div></div>
+        <div class="row"><span class="k">Proof</span><div>30-second screen recording of the MVP as a reel/Short.</div></div>
+      </div>
+      <label class="done"><input type="checkbox" id="w5" data-week> Week 5 done</label>
+    </div></div>
+
+    <div class="week"><div class="wk">Week 6<small>Days 36–42</small></div><div>
+      <h3>Evaluate and ship Project 1</h3>
+      <div class="rows">
+        <div class="row"><span class="k">Learn</span><div><a href="https://www.promptfoo.dev/docs/intro/">promptfoo docs</a> · a DeepLearning.AI course on evaluating RAG (search "evaluation" on the <a href="https://www.deeplearning.ai/short-courses/">course list</a>)</div></div>
+        <div class="row"><span class="k">Build</span><div>Write 20 question/answer pairs; score retrieval and answers. Fix the worst failures. Deploy to Streamlit Community Cloud.</div></div>
+        <div class="row"><span class="k">Proof</span><div><b>Ship post #1:</b> live URL + repo + eval score before/after. Blog: full write-up.</div></div>
+      </div>
+      <label class="done"><input type="checkbox" id="w6" data-week> Week 6 done</label>
+    </div></div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head"><h3>Phase 3 · Agents → Project 2</h3><span class="days">Days 43–63</span></div>
+
+    <div class="week"><div class="wk">Week 7<small>Days 43–49</small></div><div>
+      <h3>Agent fundamentals</h3>
+      <div class="rows">
+        <div class="row"><span class="k">Learn</span><div><a href="https://huggingface.co/learn/agents-course">HF Agents Course</a> units 1–2 · <a href="https://github.com/microsoft/ai-agents-for-beginners">MS AI Agents for Beginners</a> lessons 1–5</div></div>
+        <div class="row"><span class="k">Build</span><div>A tool-calling agent from scratch, with no framework: a loop, 2 tools (calculator, web search), and a step limit.</div></div>
+        <div class="row"><span class="k">Proof</span><div>Post a diagram of your agent loop (draw it in <a href="https://excalidraw.com">Excalidraw</a>).</div></div>
+      </div>
+      <label class="done"><input type="checkbox" id="w7" data-week> Week 7 done</label>
+    </div></div>
+
+    <div class="week"><div class="wk">Week 8<small>Days 50–56</small></div><div>
+      <h3>LangGraph and MCP</h3>
+      <div class="rows">
+        <div class="row"><span class="k">Learn</span><div><a href="https://academy.langchain.com">LangChain Academy</a>: Intro to LangGraph · <a href="https://modelcontextprotocol.io">MCP docs</a> · <a href="https://huggingface.co/learn/mcp-course">HF MCP Course</a></div></div>
+        <div class="row"><span class="k">Build</span><div>Project 2 MVP: rebuild the agent in LangGraph and expose one of your own tools as an MCP server.</div></div>
+        <div class="row"><span class="k">Proof</span><div>Publish your MCP server as its own small repo with a README.</div></div>
+      </div>
+      <label class="done"><input type="checkbox" id="w8" data-week> Week 8 done</label>
+    </div></div>
+
+    <div class="week"><div class="wk">Week 9<small>Days 57–63</small></div><div>
+      <h3>Ship Project 2 and certify</h3>
+      <div class="rows">
+        <div class="row"><span class="k">Learn</span><div><a href="https://blog.google/innovation-and-ai/technology/developers-tools/kaggle-genai-intensive-course-vibe-coding-june-2026">Kaggle 5-Day AI Agents</a> self-paced guide · HF Agents Course final unit</div></div>
+        <div class="row"><span class="k">Build</span><div>Add memory, error handling and a Gradio UI. Deploy to HF Spaces if your account can, otherwise Render.</div></div>
+        <div class="row"><span class="k">Proof</span><div><b>Ship post #2.</b> Claim the HF Agents Course certificate and add it to CERTIFICATES.md.</div></div>
+      </div>
+      <label class="done"><input type="checkbox" id="w9" data-week> Week 9 done</label>
+    </div></div>
+  </div>
+
+  <div class="phase">
+    <div class="phase-head"><h3>Phase 4 · Production → Project 3</h3><span class="days">Days 64–90</span></div>
+
+    <div class="week"><div class="wk">Week 10<small>Days 64–70</small></div><div>
+      <h3>LLMOps and deeper theory</h3>
+      <div class="rows">
+        <div class="row"><span class="k">Learn</span><div>Zero to Hero: "Let's build GPT" · <a href="https://fullstackdeeplearning.com/llm-bootcamp/">Full Stack LLM Bootcamp</a> LLMOps lecture · <a href="https://langfuse.com/docs">Langfuse docs</a></div></div>
+        <div class="row"><span class="k">Build</span><div>Project 3 design doc, then a FastAPI backend with Langfuse tracing, response caching and per-request cost logging.</div></div>
+        <div class="row"><span class="k">Proof</span><div>Post the design doc and the architecture diagram; ask for feedback.</div></div>
+      </div>
+      <label class="done"><input type="checkbox" id="w10" data-week> Week 10 done</label>
+    </div></div>
+
+    <div class="week"><div class="wk">Week 11<small>Days 71–77</small></div><div>
+      <h3>Fine-tuning lite and front end</h3>
+      <div class="rows">
+        <div class="row"><span class="k">Learn</span><div>HF LLM Course fine-tuning chapter · an <a href="https://github.com/unslothai/unsloth">Unsloth</a> notebook on Kaggle/Colab GPU</div></div>
+        <div class="row"><span class="k">Build</span><div>Fine-tune a small model on a narrow task, compare it against prompting, and use whichever wins. Build the front end (Next.js on Vercel or Streamlit).</div></div>
+        <div class="row"><span class="k">Proof</span><div>Push the model to your HF profile with a model card showing the comparison.</div></div>
+      </div>
+      <label class="done"><input type="checkbox" id="w11" data-week> Week 11 done</label>
+    </div></div>
+
+    <div class="week"><div class="wk">Week 12<small>Days 78–84</small></div><div>
+      <h3>Ship Project 3</h3>
+      <div class="rows">
+        <div class="row"><span class="k">Learn</span><div><a href="https://docs.github.com/en/actions">GitHub Actions</a> basics · promptfoo CI integration</div></div>
+        <div class="row"><span class="k">Build</span><div>Evals run on every push; deploy backend (Render) and front end (Vercel/Cloudflare). Add rate limiting and a fallback model.</div></div>
+        <div class="row"><span class="k">Proof</span><div><b>Ship post #3</b> + a 3–5 minute YouTube walkthrough.</div></div>
+      </div>
+      <label class="done"><input type="checkbox" id="w12" data-week> Week 12 done</label>
+    </div></div>
+
+    <div class="week"><div class="wk">Week 13<small>Days 85–90</small></div><div>
+      <h3>Portfolio and recap</h3>
+      <div class="rows">
+        <div class="row"><span class="k">Learn</span><div>Read 5 AI-engineer job posts; map each requirement to your proof links.</div></div>
+        <div class="row"><span class="k">Build</span><div>Portfolio on GitHub Pages: 3 project cards, certificates, the 90-day log, and your WakaTime chart.</div></div>
+        <div class="row"><span class="k">Proof</span><div>Day 90 recap post + video. Pin it on every platform and add it to LinkedIn Featured.</div></div>
+      </div>
+      <label class="done"><input type="checkbox" id="w13" data-week> Week 13 done</label>
+    </div></div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="eyebrow">Deliverables</div>
+  <h2>The 3 deployed projects</h2>
+  <p>Pick topics from your own life or work. A real problem makes better demos and better interview stories than a generic tutorial clone.</p>
+  <div class="projects">
+    <div class="proj">
+      <span class="num">Project 1 · Day 42</span>
+      <h3>Document Q&amp;A with citations</h3>
+      <p>Chat with a document set you know well: local regulations, a course syllabus, a product manual.</p>
+      <ul><li>Gemini/Groq + Chroma + LangChain</li><li>Streamlit UI on Community Cloud</li><li>20-question eval set, score in the README</li></ul>
+      <p class="small"><b>Done when:</b> live URL works, every answer cites its source, eval score published.</p>
+    </div>
+    <div class="proj">
+      <span class="num">Project 2 · Day 63</span>
+      <h3>Tool-using agent</h3>
+      <p>An agent that finishes a multi-step task: research a topic and write a brief, or triage a support inbox.</p>
+      <ul><li>LangGraph + 3 tools + your own MCP server</li><li>Gradio UI on HF Spaces or Render</li><li>Step limit, error handling, memory</li></ul>
+      <p class="small"><b>Done when:</b> live URL, recorded run showing each tool call, MCP server in its own repo.</p>
+    </div>
+    <div class="proj">
+      <span class="num">Project 3 · Day 84</span>
+      <h3>Production capstone</h3>
+      <p>A small product someone else could use, with users, data and monitoring.</p>
+      <ul><li>FastAPI on Render, front end on Vercel/Cloudflare</li><li>Supabase (pgvector + auth)</li><li>Langfuse traces, promptfoo evals in CI</li></ul>
+      <p class="small"><b>Done when:</b> live URL, CI badge green, cost per request and p95 latency in the README.</p>
+    </div>
+  </div>
+</section>
+
+<section id="proof">
+  <div class="eyebrow">Accountability</div>
+  <h2>A proof system anyone can verify</h2>
+  <p>Posts alone are just claims. Make every post point to something with a timestamp that you can't quietly edit: a commit, a certificate URL, a live demo.</p>
+  <div class="chain" aria-label="Proof chain">
+    <span>Work</span><i>→</i><span>git commit + push</span><i>→</i><span>LOG.md entry</span><i>→</i><span>social post links to commit</span><i>→</i><span>weekly blog links to posts</span>
+  </div>
+
+  <div class="two">
+    <div>
+      <h3>The public record</h3>
+      <ul class="tight">
+        <li><b>Learning log repo</b> (<code>ai-engineer-90-days</code>): one <code>logs/day-NN.md</code> per day, pushed the same day. GitHub's contribution graph and push times act as your timestamps. Never backdate.</li>
+        <li><b>CERTIFICATES.md</b>: every certificate with its public verification link (CS50P, Hugging Face, Kaggle badges, <a href="https://learn.microsoft.com/en-us/training/">Microsoft Learn transcript</a>, <a href="https://www.freecodecamp.org/learn">freeCodeCamp</a> if you use it).</li>
+        <li><b>Project repos</b>: README with live URL, demo GIF, architecture diagram, eval results, "what I'd do next".</li>
+        <li><b>Profiles</b>: <a href="https://huggingface.co">Hugging Face</a> (Spaces, models), <a href="https://www.kaggle.com">Kaggle</a> (notebooks, badges), <a href="https://wakatime.com">WakaTime</a> (public coding hours).</li>
+        <li><b>GitHub profile README</b>: a "Day N/90" line and links to all of the above. Update it weekly.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Posting cadence</h3>
+      <div class="tblwrap" style="margin-top:8px"><table style="min-width:0">
+        <thead><tr><th>When</th><th>Where</th><th>What</th></tr></thead>
+        <tbody>
+          <tr><td>Daily</td><td>X, Threads or Bluesky</td><td>"Day N/90", one learning, screenshot, commit link</td></tr>
+          <tr><td>Weekly</td><td>LinkedIn + Hashnode/DEV</td><td>Week recap, what broke, link to the log</td></tr>
+          <tr><td>Weekly</td><td>Facebook/Instagram Reels, YouTube Shorts, TikTok</td><td>30–60 s screen recording of what you built</td></tr>
+          <tr><td>Per project</td><td>YouTube + LinkedIn Featured</td><td>3–5 min demo, full write-up</td></tr>
+        </tbody>
+      </table></div>
+      <p class="small">Free tools: <a href="https://obsproject.com">OBS Studio</a> (recording), <a href="https://www.blackmagicdesign.com/products/davinciresolve">DaVinci Resolve</a> (editing), <a href="https://www.canva.com">Canva</a> (thumbnails, carousels), <a href="https://ray.so">ray.so</a> (code images), <a href="https://excalidraw.com">Excalidraw</a> (diagrams), <a href="https://buffer.com/pricing">Buffer free plan</a> (schedule up to 3 channels).</p>
+      <p class="small">Hashtags: <code>#BuildInPublic #LearnInPublic #AIEngineering #90DaysOfAI</code></p>
+    </div>
+  </div>
+
+  <div class="note"><p><b>Verification checklist, every Sunday:</b> 6+ log entries pushed this week · each daily post links to a commit · new certificates added with their verify links · demo URLs still load · WakaTime hours match the log roughly.</p></div>
+</section>
+
+<section id="templates">
+  <div class="eyebrow">Copy and use</div>
+  <h2>Templates</h2>
+
+  <h3>Daily log entry · <code>logs/day-NN.md</code></h3>
+<pre id="t1"><button class="copy" data-copy="t1">Copy</button># Day NN / 90 — YYYY-MM-DD
+**Phase / week:** Phase 2 · Week 5
+**Time spent:** 2h 30m (WakaTime: link)
+
+## Learned
+- One concrete thing, in my own words
+
+## Built
+- What I coded today → commit: https://github.com/USER/REPO/commit/SHA
+
+## Stuck on
+- Problem, what I tried, what fixed it (or still open)
+
+## Evidence
+- Screenshot / notebook / demo link
+- Post: link to today's social post
+
+## Tomorrow
+- The next smallest step</pre>
+
+  <h3 style="margin-top:24px">Daily short post</h3>
+<pre id="t2"><button class="copy" data-copy="t2">Copy</button>Day NN/90 of becoming an AI engineer for $0.
+
+Today: [one thing you built or learned, one sentence].
+Hardest part: [one sentence].
+
+Code: [commit link]
+#BuildInPublic #90DaysOfAI</pre>
+
+  <h3 style="margin-top:24px">Weekly LinkedIn post</h3>
+<pre id="t3"><button class="copy" data-copy="t3">Copy</button>Week N of my 90-day, $0 AI engineering plan.
+
+What I shipped:
+→ [thing + link]
+
+What I learned:
+→ [insight 1]
+→ [insight 2]
+
+What broke and how I fixed it:
+→ [short story]
+
+Free resources I used: [course names]
+Full daily log: [repo link]
+
+Next week: [goal]
+#AIEngineering #LearnInPublic</pre>
+
+  <h3 style="margin-top:24px">Project README outline</h3>
+<pre id="t4"><button class="copy" data-copy="t4">Copy</button># Project name
+One-line description. **Live demo:** URL
+
+![demo](demo.gif)
+
+## Problem
+## How it works  (architecture diagram)
+## Stack  (all free tiers)
+## Evaluation  (dataset, metric, before/after)
+## Cost &amp; latency
+## Limitations and next steps
+## Run locally</pre>
+</section>
+
+<section id="caveats">
+  <div class="eyebrow">Limits</div>
+  <h2>What free can't give you, and the free fix</h2>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Gap</th><th>Free fix</th></tr></thead>
+    <tbody>
+      <tr><td>No mentor or code review</td><td>Ask in the <a href="https://hf.co/join/discord">Hugging Face Discord</a>, <a href="https://www.kaggle.com/discussions">Kaggle discussions</a>, <a href="https://forum.freecodecamp.org">freeCodeCamp forum</a>; post your PRs and request reviews. Use an AI assistant to review code, then explain the fix in your log.</td></tr>
+      <tr><td>No bootcamp credential</td><td>Verifiable certificates + 3 live projects + 90 days of timestamped commits. That's stronger evidence than a certificate alone.</td></tr>
+      <tr><td>No structure or deadlines</td><td>This roadmap, the public Day N/90 posts, and the Sunday checklist.</td></tr>
+      <tr><td>Rate limits on free APIs</td><td>Cache responses, use small models while developing, fall back across Groq → Gemini → OpenRouter, run Ollama locally.</td></tr>
+      <tr><td>Free hosting sleeps</td><td>Say so in the README, and record a demo video so reviewers never hit a cold start.</td></tr>
+      <tr><td>No career services</td><td>Map job-post requirements to your proof links (Week 13). Keep an eye on <a href="https://www.levels.fyi">Levels.fyi</a> for salary data; the reel's ~$154K median varies a lot by location.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note warn"><p><b>Free tiers change often.</b> As of October 2026: Groq and Gemini still have free API tiers with no card, but limits now show only in each console; Hugging Face reportedly made new compute Spaces paid in mid-2026. Check <a href="https://console.groq.com/docs/rate-limits">Groq limits</a>, <a href="https://ai.google.dev/gemini-api/docs/rate-limits">Gemini limits</a> and <a href="https://huggingface.co/pricing">HF pricing</a> before each project.</p></div>
+</section>
+
+<footer>
+  Built from the description of a public Hyperautomation Labs reel (192K views), with links checked in October 2026. Salary figures are the creator's, citing Levels.fyi.
+</footer>
+</main>
+</div>
+
+<script>
+(function(){
+  var boxes=[].slice.call(document.querySelectorAll('input[data-week]'));
+  var KEY='zd-ai-weeks';
+  var saved={};
+  try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){}
+  function update(){
+    var n=boxes.filter(function(b){return b.checked}).length;
+    document.getElementById('pcount').textContent=n;
+    document.getElementById('ptotal').textContent=boxes.length;
+    document.getElementById('pbar').style.width=(n/boxes.length*100)+'%';
+  }
+  boxes.forEach(function(b){
+    b.checked=!!saved[b.id];
+    b.addEventListener('change',function(){
+      saved[b.id]=b.checked;
+      try{localStorage.setItem(KEY,JSON.stringify(saved));}catch(e){}
+      update();
+    });
+  });
+  update();
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var pre=document.getElementById(btn.dataset.copy);
+      var text=pre.textContent.replace(/^Copy/,'');
+      function done(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy'},1500);}
+      function fallback(){var r=document.createRange();r.selectNodeContents(pre);var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Selected';}
+      try{navigator.clipboard.writeText(text).then(done,fallback);}catch(e){fallback();}
+    });
+  });
+})();
+</script>
+</body>
+</html>
